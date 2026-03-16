@@ -22,14 +22,25 @@ async function proxy(request: NextRequest, params: Promise<{ path: string[] }>) 
         : await request.text(),
   };
 
-  const upstream = await fetch(targetUrl, init);
-  const responseHeaders = new Headers(upstream.headers);
+  try {
+    const upstream = await fetch(targetUrl, init);
+    const responseHeaders = new Headers(upstream.headers);
 
-  return new NextResponse(upstream.body, {
-    status: upstream.status,
-    statusText: upstream.statusText,
-    headers: responseHeaders,
-  });
+    return new NextResponse(upstream.body, {
+      status: upstream.status,
+      statusText: upstream.statusText,
+      headers: responseHeaders,
+    });
+  } catch (error) {
+    const message =
+      error instanceof Error
+        ? `API proxy request failed for ${targetUrl.toString()}: ${error.message}`
+        : `API proxy request failed for ${targetUrl.toString()}`;
+    return new NextResponse(message, {
+      status: 502,
+      headers: { "content-type": "text/plain; charset=utf-8" },
+    });
+  }
 }
 
 export async function GET(
