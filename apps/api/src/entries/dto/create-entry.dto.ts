@@ -1,0 +1,17 @@
+import { IsInt, IsOptional, IsString, Max, MaxLength, Min } from "class-validator";
+
+export class CreateEntryDto {
+  @IsString()
+  @MaxLength(120)
+  title!: string;
+
+  @IsString()
+  @MaxLength(10000)
+  body!: string;
+
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Max(10)
+  moodScore?: number | null;
+}
