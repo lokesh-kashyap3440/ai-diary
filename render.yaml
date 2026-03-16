@@ -8,7 +8,6 @@ services:
     name: ai-diary-api
     runtime: node
     plan: free
-    rootDir: ai-diary
     buildCommand: npm install && npm run prisma:generate && npm run build -w @ai-diary/types && npm run build -w @ai-diary/api
     startCommand: sh -c 'npx prisma db push --schema prisma/schema.prisma && npm run start -w @ai-diary/api'
     healthCheckPath: /health
@@ -54,7 +53,6 @@ services:
     name: ai-diary-web
     runtime: node
     plan: free
-    rootDir: ai-diary
     buildCommand: npm install && npm run build -w @ai-diary/types && npm run build -w @ai-diary/ui && npm run build -w @ai-diary/web
     startCommand: npm run start -w @ai-diary/web -- --hostname 0.0.0.0 --port $PORT
     envVars:
