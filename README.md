@@ -47,6 +47,16 @@ Important Render free-tier constraints:
 
 That last point means password login works on Render free, but SMTP-based magic-link email delivery does not. For real email delivery on Render free, use an email API provider instead of SMTP.
 
+After the first Render deploy, set these service env vars manually in the Render dashboard:
+
+- On `ai-diary-api`:
+  - `WEB_URL=https://<your-web-service>.onrender.com`
+  - `API_URL=https://<your-api-service>.onrender.com`
+- On `ai-diary-web`:
+  - `NEXT_PUBLIC_API_URL=https://<your-api-service>.onrender.com`
+
+The web service still uses the internal Render private-network `API_URL` for server-side proxying, but public auth links and browser-facing URLs must use the external `onrender.com` addresses.
+
 ## Additional Features
 
 - Chat coach with persisted threads

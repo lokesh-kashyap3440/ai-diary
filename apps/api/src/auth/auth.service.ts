@@ -73,10 +73,12 @@ export class AuthService {
       },
     });
 
-    const webUrl = this.configService.get<string>("WEB_URL", "http://localhost:3000");
-    const apiUrl = this.configService.get<string>("API_URL", "http://localhost:4000");
+    const webUrl = this.getNormalizedUrl(
+      this.configService.get<string>("WEB_URL"),
+      "http://localhost:3002",
+    );
     const redirectTo = `${webUrl}/app`;
-    const previewUrl = `${apiUrl}/auth/verify?token=${rawToken}&redirectTo=${encodeURIComponent(
+    const previewUrl = `${webUrl}/api/auth/verify?token=${rawToken}&redirectTo=${encodeURIComponent(
       redirectTo,
     )}`;
 
@@ -197,7 +199,10 @@ export class AuthService {
   }
 
   getSafeRedirectUrl(candidate: string | undefined) {
-    const webUrl = this.configService.get<string>("WEB_URL", "http://localhost:3000");
+    const webUrl = this.getNormalizedUrl(
+      this.configService.get<string>("WEB_URL"),
+      "http://localhost:3002",
+    );
     if (!candidate) {
       return `${webUrl}/app`;
     }
@@ -241,5 +246,18 @@ export class AuthService {
 
   private getJwtSecret() {
     return this.configService.get<string>("JWT_SECRET", "change-me");
+  }
+
+  private getNormalizedUrl(value: string | undefined, fallback: string) {
+    const raw = value?.trim();
+    if (!raw) {
+      return fallback;
+    }
+
+    if (raw.startsWith("http://") || raw.startsWith("https://")) {
+      return raw;
+    }
+
+    return `http://${raw}`;
   }
 }

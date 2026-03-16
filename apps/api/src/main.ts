@@ -10,7 +10,7 @@ async function bootstrap() {
 
   app.use(cookieParser());
   app.enableCors({
-    origin: configService.get<string>("WEB_URL", "http://localhost:3000"),
+    origin: configService.get<string>("WEB_URL", "http://localhost:3002"),
     credentials: true,
   });
   app.useGlobalPipes(

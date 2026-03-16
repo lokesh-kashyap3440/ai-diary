@@ -25,15 +25,9 @@ services:
       - key: MAGIC_LINK_TTL_MINUTES
         value: "20"
       - key: API_URL
-        fromService:
-          type: web
-          name: ai-diary-api
-          property: hostport
+        sync: false
       - key: WEB_URL
-        fromService:
-          type: web
-          name: ai-diary-web
-          property: hostport
+        sync: false
       - key: MAIL_FROM
         value: noreply@ai-diary.local
       - key: GROQ_API_KEY
@@ -62,7 +56,4 @@ services:
           name: ai-diary-api
           property: hostport
       - key: NEXT_PUBLIC_API_URL
-        fromService:
-          type: web
-          name: ai-diary-api
-          property: hostport
+        sync: false
