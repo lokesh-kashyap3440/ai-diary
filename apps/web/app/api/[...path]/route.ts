@@ -25,6 +25,9 @@ async function proxy(request: NextRequest, params: Promise<{ path: string[] }>) 
   try {
     const upstream = await fetch(targetUrl, init);
     const responseHeaders = new Headers(upstream.headers);
+    responseHeaders.delete("content-encoding");
+    responseHeaders.delete("content-length");
+    responseHeaders.delete("transfer-encoding");
 
     return new NextResponse(upstream.body, {
       status: upstream.status,
