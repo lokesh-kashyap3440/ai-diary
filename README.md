@@ -53,9 +53,10 @@ After the first Render deploy, set these service env vars manually in the Render
   - `WEB_URL=https://<your-web-service>.onrender.com`
   - `API_URL=https://<your-api-service>.onrender.com`
 - On `ai-diary-web`:
+  - `API_URL=https://<your-api-service>.onrender.com`
   - `NEXT_PUBLIC_API_URL=https://<your-api-service>.onrender.com`
 
-The web service still uses the internal Render private-network `API_URL` for server-side proxying, but public auth links and browser-facing URLs must use the external `onrender.com` addresses.
+Use the public `onrender.com` API URL for both web env vars. The private-network host/port path is not reliable for this setup.
 
 ## Additional Features
 

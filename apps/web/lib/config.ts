@@ -12,6 +12,6 @@ function normalizeUrl(value: string | undefined, fallback: string) {
 }
 
 export const INTERNAL_API_URL = normalizeUrl(
-  process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL,
+  process.env.NEXT_PUBLIC_API_URL ?? process.env.API_URL,
   "http://localhost:4000",
 );
