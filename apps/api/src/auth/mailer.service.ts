@@ -26,12 +26,20 @@ export class MailerService {
       auth: { user, pass },
     });
 
-    await transporter.sendMail({
-      from,
-      to: email,
-      subject: "Your AI Diary magic link",
-      text: `Sign in to AI Diary: ${url}`,
-    });
+    try {
+      await transporter.sendMail({
+        from,
+        to: email,
+        subject: "Your AI Diary magic link",
+        text: `Sign in to AI Diary: ${url}`,
+      });
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Unknown SMTP delivery error";
+      this.logger.warn(`SMTP delivery failed for ${email}: ${message}`);
+      this.logger.log(`Magic link fallback for ${email}: ${url}`);
+      return { delivered: false, previewUrl: url };
+    }
 
     return { delivered: true, previewUrl: undefined };
   }
