@@ -32,16 +32,8 @@ services:
         value: noreply@ai-diary.local
       - key: GROQ_API_KEY
         sync: false
-      - key: SMTP_HOST
+      - key: RESEND_API_KEY
         sync: false
-      - key: SMTP_PORT
-        value: "587"
-      - key: SMTP_USER
-        sync: false
-      - key: SMTP_PASS
-        sync: false
-      - key: SMTP_SECURE
-        value: "false"
 
   - type: web
     name: ai-diary-web

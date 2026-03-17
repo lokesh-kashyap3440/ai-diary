@@ -151,7 +151,7 @@ export function AuthForm({ mode = "signin" }: { mode?: "signin" | "register" }) 
         {message ? <p className="muted">{message}</p> : null}
         {previewUrl ? (
           <a className="muted" href={previewUrl}>
-            Dev preview: open magic link
+            Open magic link
           </a>
         ) : null}
         <p className="muted">

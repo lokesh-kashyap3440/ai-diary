@@ -22,7 +22,7 @@ Monorepo MVP for a reflective AI diary built with Next.js, NestJS, Prisma, Postg
 
 1. Copy `.env.example` to `.env`
 2. Set `GROQ_API_KEY` if you want live AI reflections
-3. Optionally set SMTP variables if you want real magic-link email delivery
+3. Optionally set `RESEND_API_KEY` and a valid `MAIL_FROM` address if you want real magic-link email delivery
 4. Run `docker compose up --build`
 
 Services:
@@ -45,13 +45,15 @@ Important Render free-tier constraints:
 - Free Postgres expires after 30 days unless upgraded.
 - Free web services cannot send outbound SMTP traffic on ports like `587`.
 
-That last point means password login works on Render free, but SMTP-based magic-link email delivery does not. For real email delivery on Render free, use an email API provider instead of SMTP.
+That last point means password login works on Render free, but SMTP-based magic-link email delivery does not. This project uses Resend over HTTPS instead, which works on Render free.
 
 After the first Render deploy, set these service env vars manually in the Render dashboard:
 
 - On `ai-diary-api`:
   - `WEB_URL=https://<your-web-service>.onrender.com`
   - `API_URL=https://<your-api-service>.onrender.com`
+  - `MAIL_FROM=noreply@<your-domain>`
+  - `RESEND_API_KEY=re_...`
 - On `ai-diary-web`:
   - `API_URL=https://<your-api-service>.onrender.com`
   - `NEXT_PUBLIC_API_URL=https://<your-api-service>.onrender.com`
@@ -69,12 +71,9 @@ Use the public `onrender.com` API URL for both web env vars. The private-network
 
 ## Email Delivery
 
-Real magic-link delivery uses SMTP when configured:
+Real magic-link delivery uses Resend when configured:
 
-- `SMTP_HOST`
-- `SMTP_PORT`
-- `SMTP_USER`
-- `SMTP_PASS`
-- `SMTP_SECURE`
+- `RESEND_API_KEY`
+- `MAIL_FROM`
 
-If those are not set, the app falls back to showing/logging a preview magic link for development.
+If `RESEND_API_KEY` is not set, the app falls back to showing/logging a preview magic link for development.
