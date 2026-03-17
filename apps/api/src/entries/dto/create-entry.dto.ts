@@ -1,4 +1,4 @@
-import { IsInt, IsOptional, IsString, Max, MaxLength, Min } from "class-validator";
+import { IsBoolean, IsInt, IsOptional, IsString, Max, MaxLength, Min } from "class-validator";
 
 export class CreateEntryDto {
   @IsString()
@@ -14,4 +14,8 @@ export class CreateEntryDto {
   @Min(1)
   @Max(10)
   moodScore?: number | null;
+
+  @IsOptional()
+  @IsBoolean()
+  isDraft?: boolean;
 }
