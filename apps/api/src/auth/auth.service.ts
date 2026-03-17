@@ -77,10 +77,7 @@ export class AuthService {
       this.configService.get<string>("WEB_URL"),
       "http://localhost:3002",
     );
-    const redirectTo = `${webUrl}/app`;
-    const previewUrl = `${webUrl}/api/auth/verify?token=${rawToken}&redirectTo=${encodeURIComponent(
-      redirectTo,
-    )}`;
+    const previewUrl = `${webUrl}/auth/callback?token=${encodeURIComponent(rawToken)}`;
 
     const delivery = await this.mailerService.sendMagicLink(normalizedEmail, previewUrl);
 

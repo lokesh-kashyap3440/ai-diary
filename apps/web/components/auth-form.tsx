@@ -27,7 +27,7 @@ export function AuthForm({ mode = "signin" }: { mode?: "signin" | "register" }) 
       setMessage(response.message);
       if (response.previewUrl) {
         const parsed = new URL(response.previewUrl);
-        setPreviewUrl(`/api${parsed.pathname}${parsed.search}`);
+        setPreviewUrl(`${parsed.pathname}${parsed.search}`);
       } else {
         setPreviewUrl(null);
       }
